@@ -36,6 +36,7 @@ export default function HeroSection() {
               src="/galaxy-ring-icon-ai.svg"
               alt="Galaxy AI Icon"
               fill
+              sizes="(max-width: 640px) 40px, (max-width: 768px) 48px, 64px"
               className="object-contain filter drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] animate-pulse"
               priority
             />
