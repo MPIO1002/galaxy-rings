@@ -3,6 +3,7 @@ import { Database } from "../config/Database";
 import { OrderRepository } from "../repositories/OrderRepository";
 import { OrderService } from "../services/OrderService";
 import { OrderController } from "../controllers/OrderController";
+import { authenticate } from "../middleware/authenticate";
 
 /**
  * Factory function to create and wire up order routes with dependencies.
@@ -17,8 +18,8 @@ export function createOrderRoutes(db: Database): Router {
   const orderController = new OrderController(orderService);
 
   // Route registration
-  router.post("/orders", orderController.handleCreateOrder);
-  router.get("/orders", orderController.handleGetOrders);
+  router.post("/orders", orderController.handleCreateOrder);        // Public: anyone can place an order
+  router.get("/orders", authenticate, orderController.handleGetOrders); // Admin only
 
   return router;
 }
