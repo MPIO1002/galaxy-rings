@@ -4,11 +4,12 @@ import { useState } from "react";
 
 export function useBuyConfiguration(imagesLength: number) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedColor, setSelectedColor] = useState("black");
+  const [selectedColor, setSelectedColor] = useState<number>(1); // Default to color ID 1 (Black)
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [showVideoPopup, setShowVideoPopup] = useState(false);
+  const [showOrderModal, setShowOrderModal] = useState(false);
 
-  const handleColorSelect = (colorId: string, index: number) => {
+  const handleColorSelect = (colorId: number, index: number) => {
     setSelectedColor(colorId);
     setActiveImageIndex(index);
   };
@@ -21,8 +22,8 @@ export function useBuyConfiguration(imagesLength: number) {
     setActiveImageIndex((prev) => (prev - 1 + imagesLength) % imagesLength);
   };
 
-  const handleBuy = (colorName: string) => {
-    alert(`Đặt mua thành công Galaxy Ring màu ${colorName}, Size: ${selectedSize || 'Chưa chọn'}`);
+  const handleBuy = () => {
+    setShowOrderModal(true);
   };
 
   return {
@@ -33,6 +34,8 @@ export function useBuyConfiguration(imagesLength: number) {
     setSelectedSize,
     showVideoPopup,
     setShowVideoPopup,
+    showOrderModal,
+    setShowOrderModal,
     handleColorSelect,
     nextSlide,
     prevSlide,
