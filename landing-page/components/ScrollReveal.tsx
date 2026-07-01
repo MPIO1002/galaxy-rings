@@ -61,6 +61,8 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
 
   useEffect(() => {
     if (shouldLoad && videoRef.current) {
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
       videoRef.current.play().catch(() => {});
     }
   }, [shouldLoad]);
@@ -83,6 +85,7 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
             className="w-full h-auto block"
             autoPlay
             muted
+            loop
             playsInline
             src={src}
             onPlay={() => setIsPlaying(true)}
