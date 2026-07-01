@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { Database } from "./config/Database";
 import { createOrderRoutes } from "./routes/orderRoutes";
 import { createSubscriberRoutes } from "./routes/subscriberRoutes";
+import { createAuthRoutes } from "./routes/authRoutes";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ try {
 
 
 // Mount routes with dependencies injected
+app.use("/api", createAuthRoutes());
 app.use("/api", createOrderRoutes(db));
 app.use("/api", createSubscriberRoutes(db));
 

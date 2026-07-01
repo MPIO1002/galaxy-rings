@@ -3,6 +3,7 @@ import { Database } from "../config/Database";
 import { SubscriberRepository } from "../repositories/SubscriberRepository";
 import { SubscriberService } from "../services/SubscriberService";
 import { SubscriberController } from "../controllers/SubscriberController";
+import { authenticate } from "../middleware/authenticate";
 
 /**
  * Factory function to wire and create subscriber routes.
@@ -17,8 +18,8 @@ export function createSubscriberRoutes(db: Database): Router {
   const subscriberController = new SubscriberController(subscriberService);
 
   // Endpoints
-  router.post("/subscribers", subscriberController.handleCreateSubscriber);
-  router.get("/subscribers", subscriberController.handleGetSubscribers);
+  router.post("/subscribers", subscriberController.handleCreateSubscriber);        // Public: anyone can subscribe
+  router.get("/subscribers", authenticate, subscriberController.handleGetSubscribers); // Admin only
 
   return router;
 }
