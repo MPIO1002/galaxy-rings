@@ -28,7 +28,6 @@ export default function SubscribeSection() {
 
   return (
     <section id="subscribe" className="w-full bg-[#0a0a0c] text-white py-20 md:py-28 relative overflow-hidden font-sans">
-      {/* Background Video (Plays once) */}
       <video
         ref={videoRef}
         autoPlay
@@ -36,9 +35,8 @@ export default function SubscribeSection() {
         loop
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0 opacity-30 pointer-events-none"
-      >
-        <source src="/galaxy-ring-concave-pc.webm" type="video/webm" />
-      </video>
+        src="/galaxy-ring-concave-pc.webm"
+      />
 
       {/* Dark overlay for contrast */}
       <div className="absolute inset-0 bg-black/60 z-0 pointer-events-none" />
