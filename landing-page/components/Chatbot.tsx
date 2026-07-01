@@ -86,7 +86,7 @@ export default function Chatbot() {
 
       {/* Cửa sổ Chatbot */}
       {isOpen && (
-        <Card className="fixed bottom-24 right-6 w-[350px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] flex flex-col shadow-2xl z-50 animate-fade-in-up border-border/50">
+        <Card className="fixed bottom-24 right-6 w-[350px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] flex flex-col shadow-2xl z-50 animate-fade-in-up border-border/50 p-0 gap-0">
           <CardHeader className="bg-black text-white rounded-t-xl px-4 py-3 shrink-0 flex flex-row items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
