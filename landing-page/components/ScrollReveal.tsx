@@ -41,14 +41,6 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
 
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.defaultMuted = true;
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(() => {});
-    }
-  }, []);
-
   const togglePlay = () => {
     if (!videoRef.current) return;
     if (isPlaying) {
