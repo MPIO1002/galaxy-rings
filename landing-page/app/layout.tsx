@@ -4,7 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Chatbot from "@/components/Chatbot";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -22,11 +22,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Galaxy Ring Thế Hệ Mới - Trợ Lý Sức Khỏe AI Toàn Diện",
     description: "Thiết kế titan thời thượng, pin bền bỉ cả tuần, theo dõi sức khỏe thông minh cùng Galaxy AI. Đăng ký trải nghiệm sớm ngay hôm nay!",
-    url: "https://ten-mien-landing-page-cua-ban.com",
+    url: "https://galaxy-rings.vercel.app/",
     siteName: "Samsung Galaxy Ring Ecosystem",
     images: [
       {
-        url: "/og-image.webp",
+        url: "/all-rings.webp",
         width: 1200,
         height: 630,
         alt: "Samsung Galaxy Ring Banner",
