@@ -65,7 +65,6 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
         className="w-full h-auto block"
         autoPlay
         muted
-        loop
         playsInline
         src={src}
         onPlay={() => setIsPlaying(true)}
