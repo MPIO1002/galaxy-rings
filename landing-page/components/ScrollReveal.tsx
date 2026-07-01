@@ -42,6 +42,11 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
   const [shouldLoad, setShouldLoad] = useState(false); // quyết định có mount <video> hay chưa
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // 1. Phát hiện iOS/Safari
+  const isIOS = typeof navigator !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
+  // 2. Chọn source chủ động (để tránh lỗi fallback AV1 WebM của Safari)
+  const actualSrc = isIOS ? `${src}.mp4` : `${src}.webm`;
+
   // Bước 1: phát hiện khi nào wrapper (KHÔNG transform) đi vào viewport
   useEffect(() => {
     const el = wrapperRef.current;
@@ -53,7 +58,7 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0, rootMargin: "200px" }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -65,7 +70,9 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
     const video = videoRef.current;
     // Delay nhỏ để chắc chắn không trùng với bất kỳ transition nào ở DOM cha
     const t = setTimeout(() => {
-      video.play().catch(() => { });
+      video.play().catch((err) => {
+        console.error("Video autoplay failed:", err);
+      });
     }, 50);
     return () => clearTimeout(t);
   }, [shouldLoad]);
@@ -90,13 +97,17 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
           muted
           playsInline
           preload="metadata"
+          src={actualSrc}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onEnded={() => setIsPlaying(false)}
-        >
-          <source src={`${src}.webm`} type="video/webm" />
-          <source src={`${src}.mp4`} type="video/mp4" />
-        </video>
+          onLoadedMetadata={() => {
+            console.log("Video source:", videoRef.current?.currentSrc);
+          }}
+          onError={() => {
+            console.error("Video error:", videoRef.current?.currentSrc);
+          }}
+        />
       )}
       <button
         onClick={togglePlay}
