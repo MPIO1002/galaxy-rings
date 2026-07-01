@@ -37,55 +37,64 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
 
 // Lazy Video Component - Renders video directly to ensure iOS native autoplay works
 export function LazyVideo({ src, className = "" }: { src: string; className?: string }) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false); // quyết định có mount <video> hay chưa
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // Bước 1: phát hiện khi nào wrapper (KHÔNG transform) đi vào viewport
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
+    const el = wrapperRef.current;
+    if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(() => {
-            });
-          }
-        } else {
-          video.pause();
+          setShouldLoad(true); // mount video lần đầu
+          observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
-
-    observer.observe(video);
+    observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
+  // Bước 2: một khi video đã mount, đảm bảo play() được gọi sau khi đã "ổn định" (không còn transform nào chạy)
+  useEffect(() => {
+    if (!shouldLoad || !videoRef.current) return;
+    const video = videoRef.current;
+    // Delay nhỏ để chắc chắn không trùng với bất kỳ transition nào ở DOM cha
+    const t = setTimeout(() => {
+      video.play().catch(() => { });
+    }, 50);
+    return () => clearTimeout(t);
+  }, [shouldLoad]);
+
   const togglePlay = () => {
     if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-    } else {
-      videoRef.current.play();
-    }
+    isPlaying ? videoRef.current.pause() : videoRef.current.play();
   };
 
   return (
-    <div className={`${className} bg-[#f7f7f7] relative min-h-[150px] flex items-center justify-center`}>
-      <video
-        ref={videoRef}
-        className="w-full h-auto block"
-        muted
-        playsInline
-        preload="auto"
-        src={src}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onEnded={() => setIsPlaying(false)}
-      />
-      {/* Floating Play / Pause Control Button */}
+    // Wrapper này chỉ dùng opacity, KHÔNG dùng transform/scale, để không phá compositing layer của video
+    <div
+      ref={wrapperRef}
+      className={`${className} bg-[#f7f7f7] relative min-h-[150px] flex items-center justify-center transition-opacity duration-700 ${shouldLoad ? "opacity-100" : "opacity-0"
+        }`}
+    >
+      {shouldLoad && (
+        <video
+          ref={videoRef}
+          className="w-full h-auto block"
+          muted
+          playsInline
+          preload="auto"
+          src={src}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onEnded={() => setIsPlaying(false)}
+        />
+      )}
       <button
         onClick={togglePlay}
         className="absolute bottom-6 right-6 md:bottom-8 md:right-8 z-20 flex items-center justify-center w-12 h-12 rounded-full bg-black/50 hover:bg-black/70 border border-white/20 hover:border-white/50 text-white transition-all duration-300 active:scale-90 cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
