@@ -16,12 +16,24 @@ export default function SubscribeSection() {
       onError: (msg) => showToast(msg, "error"),
     });
 
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+  
+  React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.defaultMuted = true;
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(() => {});
+    }
+  }, []);
+
   return (
     <section id="subscribe" className="w-full bg-[#0a0a0c] text-white py-20 md:py-28 relative overflow-hidden font-sans">
       {/* Background Video (Plays once) */}
       <video
+        ref={videoRef}
         autoPlay
         muted
+        loop
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0 opacity-30 pointer-events-none"
       >
