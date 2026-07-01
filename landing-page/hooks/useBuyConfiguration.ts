@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function useBuyConfiguration(imagesLength: number) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -22,8 +22,16 @@ export function useBuyConfiguration(imagesLength: number) {
     setActiveImageIndex((prev) => (prev - 1 + imagesLength) % imagesLength);
   };
 
-
-
+  useEffect(() => {
+    if (showOrderModal || showVideoPopup) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [showOrderModal, showVideoPopup]);
   return {
     activeImageIndex,
     setActiveImageIndex,

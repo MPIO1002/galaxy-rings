@@ -18,6 +18,20 @@ export function useNavbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Khóa cuộn trang khi mở menu mobile
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    
+    // Cleanup function để đảm bảo reset lại khi component unmount
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     if (href === "#") {

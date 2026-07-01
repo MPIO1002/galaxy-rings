@@ -292,7 +292,7 @@ export default function BuySection() {
       {/* Order Modal */}
       {showOrderModal && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 transition-opacity duration-300"
+          className="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 backdrop-blur-md p-4 transition-opacity duration-300"
           onClick={handleCloseModal}
         >
           <div
@@ -504,7 +504,7 @@ export default function BuySection() {
       {/* Video Popup Modal */}
       {showVideoPopup && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 transition-opacity duration-300"
+          className="fixed inset-0 z-[999] flex items-center justify-center bg-black/70 backdrop-blur-md p-4 transition-opacity duration-300"
           onClick={() => setShowVideoPopup(false)}
         >
           {/* Modal content */}

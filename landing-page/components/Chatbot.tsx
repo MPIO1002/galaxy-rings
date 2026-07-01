@@ -30,6 +30,18 @@ export default function Chatbot() {
     scrollToBottom();
   }, [messages, isTyping]);
 
+  // Khóa cuộn trang khi mở chatbot
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   const handleSend = async (e?: React.FormEvent) => {
     e?.preventDefault();
     if (!input.trim()) return;
@@ -70,7 +82,7 @@ export default function Chatbot() {
       {/* Nút bật/tắt chatbot */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-black text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-zinc-800 hover:scale-105 active:scale-95 transition-all z-50 border border-white/10"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-black text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-zinc-800 hover:scale-105 active:scale-95 transition-all z-[999] border border-white/10"
         aria-label="Toggle Chat"
       >
         {isOpen ? (
@@ -86,7 +98,7 @@ export default function Chatbot() {
 
       {/* Cửa sổ Chatbot */}
       {isOpen && (
-        <Card className="fixed bottom-24 right-6 w-[350px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] flex flex-col shadow-2xl z-50 animate-fade-in-up border-border/50 p-0 gap-0">
+        <Card className="fixed bottom-24 right-6 w-[350px] max-w-[calc(100vw-3rem)] h-[500px] max-h-[calc(100vh-8rem)] flex flex-col shadow-2xl z-[999] animate-fade-in-up border-border/50 p-0 gap-0">
           <CardHeader className="bg-black text-white rounded-t-xl px-4 py-3 shrink-0 flex flex-row items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
