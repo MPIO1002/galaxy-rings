@@ -20,11 +20,11 @@ export default function HeroSection() {
     <section className="relative w-full h-screen bg-black text-white flex flex-col items-center justify-between overflow-hidden pt-12 md:pt-20 pb-0">
       {/* Background ambient lighting */}
       <div className="absolute top-[-10%] left-[50%] translate-x-[-50%] w-[80%] h-[40%] bg-[radial-gradient(circle_at_center,rgba(120,119,198,0.08)_0%,rgba(0,0,0,0)_70%)] pointer-events-none" />
-      
+
       {/* Content wrapper */}
       <div className="relative z-10 max-w-4xl w-full px-6 flex flex-col items-center text-center">
         {/* Brand label */}
-        <div className="opacity-0 text-xs md:text-sm font-black tracking-[0.4em] text-white uppercase mb-2 md:mb-3 animate-fade-in">
+        <div className="opacity-0 text-xs md:text-sm font-black tracking-[0.4em] text-white uppercase mb-2 md:mb-3 mt-5 animate-fade-in">
           Galaxy Ring
         </div>
 
@@ -82,7 +82,7 @@ export default function HeroSection() {
           />
           {/* Gradients to fade video into the background */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90 pointer-events-none" />
-          
+
           {/* Play / Replay Floating Control Button */}
           <button
             onClick={togglePlay}

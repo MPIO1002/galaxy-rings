@@ -165,8 +165,8 @@ export class OrderService {
     }
 
     // 8. Size validations
-    if (size < 1 || size > 30) {
-      throw new Error("Kích cỡ nhẫn không hợp lệ (phải từ 1 đến 30)");
+    if (size < 6 || size > 12) {
+      throw new Error("Kích cỡ nhẫn không hợp lệ (phải từ 6 đến 12)");
     }
   }
 }

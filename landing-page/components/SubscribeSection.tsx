@@ -1,64 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Reveal } from "./ScrollReveal";
+import { useSubscribe } from "../hooks/useSubscribe";
+import { useToast } from "../hooks/useToast";
+import { ToastContainer } from "./Toast";
 
 export default function SubscribeSection() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: ""
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const { showToast, dismissToast, toasts } = useToast();
 
-  const validate = () => {
-    const newErrors: Record<string, string> = {};
-    
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = "Vui lòng nhập họ và tên";
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim()) {
-      newErrors.email = "Vui lòng nhập email";
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Email không hợp lệ";
-    }
-
-    const phoneRegex = /^(0|84)(3|5|7|8|9)[0-9]{8}$/;
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Vui lòng nhập số điện thoại";
-    } else if (!phoneRegex.test(formData.phone.replace(/\s+/g, ""))) {
-      newErrors.phone = "Số điện thoại không đúng định dạng (VD: 0912345678)";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-
-    setIsSubmitting(true);
-
-    // Simulate API registration call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({ fullName: "", email: "", phone: "" });
-    }, 1800);
-  };
+  const { formData, errors, isSubmitting, isSuccess, handleChange, handleSubmit, reset } =
+    useSubscribe({
+      onSuccess: () =>
+        showToast("Đăng ký thành công! Chúng tôi sẽ liên hệ sớm nhất.", "success"),
+      onError: (msg) => showToast(msg, "error"),
+    });
 
   return (
     <section id="subscribe" className="w-full bg-[#0a0a0c] text-white py-20 md:py-28 relative overflow-hidden font-sans">
@@ -111,7 +67,7 @@ export default function SubscribeSection() {
                   Cảm ơn bạn đã quan tâm đến Galaxy Ring. Chúng tôi đã ghi nhận thông tin và sẽ gửi cập nhật sớm nhất đến bạn qua Email và SMS.
                 </p>
                 <button
-                  onClick={() => setIsSuccess(false)}
+                  onClick={reset}
                   className="mt-8 text-xs font-bold text-zinc-500 hover:text-zinc-300 transition uppercase tracking-wider cursor-pointer"
                 >
                   Đăng ký tài khoản khác
@@ -227,6 +183,8 @@ export default function SubscribeSection() {
           </div>
         </Reveal>
       </div>
+
+      <ToastContainer toasts={toasts} onDismiss={dismissToast} />
     </section>
   );
 }

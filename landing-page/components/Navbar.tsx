@@ -8,11 +8,10 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 font-sans ${
-        isScrolled
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 font-sans ${isScrolled
           ? "bg-black/80 backdrop-blur-md border-b border-zinc-800/50 py-4"
           : "bg-transparent py-6"
-      }`}
+        }`}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
         {/* Brand Logo */}
@@ -23,9 +22,6 @@ export default function Navbar() {
         >
           <span className="text-lg md:text-xl font-black tracking-[0.2em] text-white">
             SAMSUNG
-          </span>
-          <span className="text-xs text-zinc-400 font-medium tracking-wide">
-            Galaxy Ring
           </span>
         </a>
 
@@ -74,9 +70,8 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       <div
-        className={`md:hidden absolute top-full left-0 w-full bg-black/95 border-b border-zinc-800/80 transition-all duration-300 overflow-hidden ${
-          isOpen ? "max-h-[300px] opacity-100 py-6" : "max-h-0 opacity-0 py-0"
-        }`}
+        className={`md:hidden absolute top-full left-0 w-full bg-black/95 border-b border-zinc-800/80 transition-all duration-300 overflow-hidden ${isOpen ? "max-h-[300px] opacity-100 py-6" : "max-h-0 opacity-0 py-0"
+          }`}
       >
         <div className="flex flex-col items-center gap-5 px-6">
           {NAV_LINKS.map((link) => (
