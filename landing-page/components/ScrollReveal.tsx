@@ -86,14 +86,17 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
         <video
           ref={videoRef}
           className="w-full h-auto block"
+          autoPlay
           muted
           playsInline
-          preload="auto"
-          src={src}
+          preload="metadata"
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onEnded={() => setIsPlaying(false)}
-        />
+        >
+          <source src={`${src}.webm`} type="video/webm" />
+          <source src={`${src}.mp4`} type="video/mp4" />
+        </video>
       )}
       <button
         onClick={togglePlay}

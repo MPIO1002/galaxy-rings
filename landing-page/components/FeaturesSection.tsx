@@ -79,7 +79,7 @@ export default function FeaturesSection() {
         {/* Middle Video Block (Full-width on mobile and desktop, lazy loaded) */}
         <div className="w-full mb-6 md:mb-14 overflow-hidden">
           <LazyVideo
-            src="/galaxy-ring-energy-score-video-pc.webm"
+            src="/galaxy-ring-energy-score-video-pc"
             className="w-full overflow-hidden"
           />
         </div>

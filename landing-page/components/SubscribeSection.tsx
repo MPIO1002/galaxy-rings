@@ -25,9 +25,12 @@ export default function SubscribeSection() {
         autoPlay
         muted
         playsInline
+        preload="metadata"
         className="absolute inset-0 w-full h-full object-cover z-0 opacity-30 pointer-events-none"
-        src="/galaxy-ring-concave-pc.webm"
-      />
+      >
+        <source src="/galaxy-ring-concave-pc.webm" type="video/webm" />
+        <source src="/galaxy-ring-concave-pc.mp4" type="video/mp4" />
+      </video>
 
       {/* Dark overlay for contrast */}
       <div className="absolute inset-0 bg-black/60 z-0 pointer-events-none" />

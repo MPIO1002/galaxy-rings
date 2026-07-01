@@ -75,11 +75,14 @@ export default function HeroSection() {
             autoPlay
             muted
             playsInline
-            src="/hero-video.webm"
+            preload="metadata"
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             onEnded={() => setIsPlaying(false)}
-          />
+          >
+            <source src="/hero-video.webm" type="video/webm" />
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
           {/* Gradients to fade video into the background */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90 pointer-events-none" />
 
