@@ -22,7 +22,10 @@ interface Subscriber {
 }
 
 function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("vi-VN", {
+  const d = new Date(dateStr);
+  d.setHours(d.getHours() + 7);
+  return d.toLocaleDateString("vi-VN", {
+    timeZone: "Asia/Ho_Chi_Minh",
     day: "2-digit",
     month: "2-digit",
     year: "numeric",

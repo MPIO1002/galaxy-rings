@@ -32,8 +32,7 @@ export default function BuySection() {
     setShowOrderModal,
     handleColorSelect,
     nextSlide,
-    prevSlide,
-    handleBuy
+    prevSlide
   } = useBuyConfiguration(CAROUSEL_IMAGES.length);
 
   const { showToast, dismissToast, toasts } = useToast();
@@ -56,11 +55,27 @@ export default function BuySection() {
   const product = PRODUCTS[0];
 
   const onSubmitOrder = () => {
+    if (!selectedColor) {
+      showToast("Vui lòng chọn màu sắc trước khi đặt hàng.", "warning");
+      return;
+    }
     if (!selectedSize) {
       showToast("Vui lòng chọn size nhẫn trước khi đặt hàng.", "warning");
       return;
     }
     handleSubmit(product.id, selectedColor, selectedSize);
+  };
+
+  const handleBuyClick = () => {
+    if (!selectedColor) {
+      showToast("Vui lòng chọn màu sắc trước khi đặt hàng.", "warning");
+      return;
+    }
+    if (!selectedSize) {
+      showToast("Vui lòng chọn size nhẫn trước khi đặt hàng.", "warning");
+      return;
+    }
+    setShowOrderModal(true);
   };
 
   const handleCloseModal = () => {
@@ -233,9 +248,8 @@ export default function BuySection() {
               </div>
             </div>
 
-            {/* Action Buy Button */}
             <button
-              onClick={handleBuy}
+              onClick={handleBuyClick}
               className="w-full py-4 md:py-5 rounded-full bg-black text-white hover:bg-zinc-900 transition-all duration-300 font-bold text-sm md:text-base tracking-wider hover:scale-[1.01] active:scale-99 shadow-lg shadow-black/10 cursor-pointer"
             >
               Mua ngay

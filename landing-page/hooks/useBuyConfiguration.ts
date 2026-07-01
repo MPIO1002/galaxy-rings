@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export function useBuyConfiguration(imagesLength: number) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedColor, setSelectedColor] = useState<number>(1); // Default to color ID 1 (Black)
+  const [selectedColor, setSelectedColor] = useState<number | null>(null);
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [showVideoPopup, setShowVideoPopup] = useState(false);
   const [showOrderModal, setShowOrderModal] = useState(false);
@@ -22,9 +22,7 @@ export function useBuyConfiguration(imagesLength: number) {
     setActiveImageIndex((prev) => (prev - 1 + imagesLength) % imagesLength);
   };
 
-  const handleBuy = () => {
-    setShowOrderModal(true);
-  };
+
 
   return {
     activeImageIndex,
@@ -38,7 +36,6 @@ export function useBuyConfiguration(imagesLength: number) {
     setShowOrderModal,
     handleColorSelect,
     nextSlide,
-    prevSlide,
-    handleBuy
+    prevSlide
   };
 }
