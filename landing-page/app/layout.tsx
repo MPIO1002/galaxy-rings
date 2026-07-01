@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Montserrat, Geist } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -60,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${montserrat.variable}`}
+      className={cn(montserrat.variable, "font-sans", geist.variable)}
     >
       <body className="font-sans min-h-full flex flex-col">
         {children}
