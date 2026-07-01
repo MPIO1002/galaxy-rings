@@ -27,6 +27,7 @@ export default function FeaturesSection() {
               src="/galaxy-ring-samsung-health-eco-system.webp"
               alt="Hệ sinh thái sức khỏe Samsung Health"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
               className="object-contain object-top md:object-bottom"
               loading="lazy"
             />
@@ -54,6 +55,7 @@ export default function FeaturesSection() {
                 src="/galaxy-ring-samsung-account.webp"
                 alt="Kết nối tài khoản Samsung"
                 fill
+                sizes="(max-width: 640px) 350px, (max-width: 768px) 450px, 600px"
                 className="object-contain object-top md:object-center"
                 loading="lazy"
               />
