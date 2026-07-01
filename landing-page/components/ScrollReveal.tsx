@@ -27,9 +27,8 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-1000 ease-out transform ${
-        isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-12 scale-[0.98]"
-      } ${className}`}
+      className={`transition-all duration-1000 ease-out transform ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-12 scale-[0.98]"
+        } ${className}`}
     >
       {children}
     </div>
@@ -39,7 +38,24 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
 // Lazy Video Component - Renders video directly to ensure iOS native autoplay works
 export function LazyVideo({ src, className = "" }: { src: string; className?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          videoEl.play().catch((err) => console.log("Autoplay blocked:", err));
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(videoEl);
+    return () => observer.disconnect();
+  }, [src]);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -55,7 +71,6 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
       <video
         ref={videoRef}
         className="w-full h-auto block"
-        autoPlay
         muted
         playsInline
         src={src}
