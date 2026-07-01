@@ -41,21 +41,27 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    const videoEl = videoRef.current;
-    if (!videoEl) return;
+    const video = videoRef.current;
+    if (!video) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          videoEl.play().catch((err) => console.log("Autoplay blocked:", err));
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+            });
+          }
+        } else {
+          video.pause();
         }
       },
       { threshold: 0.1 }
     );
 
-    observer.observe(videoEl);
+    observer.observe(video);
     return () => observer.disconnect();
-  }, [src]);
+  }, []);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -73,6 +79,7 @@ export function LazyVideo({ src, className = "" }: { src: string; className?: st
         className="w-full h-auto block"
         muted
         playsInline
+        preload="auto"
         src={src}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
