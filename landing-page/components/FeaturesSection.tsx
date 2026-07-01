@@ -77,12 +77,12 @@ export default function FeaturesSection() {
         </Reveal>
 
         {/* Middle Video Block (Full-width on mobile and desktop, lazy loaded) */}
-        <Reveal className="w-full mb-6 md:mb-14 overflow-hidden" delay={150}>
+        <div className="w-full mb-6 md:mb-14 overflow-hidden">
           <LazyVideo
             src="/galaxy-ring-energy-score-video-pc.webm"
             className="w-full overflow-hidden"
           />
-        </Reveal>
+        </div>
 
         {/* Bottom Image Block (Responsive centered on mobile, 70% width on desktop) */}
         <Reveal className="w-full max-w-xl md:max-w-[70%] px-6 md:px-0 mx-auto" delay={300}>
