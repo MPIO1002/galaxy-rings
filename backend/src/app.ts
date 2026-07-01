@@ -5,11 +5,13 @@ import { Database } from "./config/Database";
 import { createOrderRoutes } from "./routes/orderRoutes";
 import { createSubscriberRoutes } from "./routes/subscriberRoutes";
 import { createAuthRoutes } from "./routes/authRoutes";
+import { ChatController } from "./controllers/ChatController";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const chatController = new ChatController();
 
 // Enable CORS and JSON parsing middlewares
 app.use(cors());
@@ -30,6 +32,9 @@ try {
 app.use("/api", createAuthRoutes());
 app.use("/api", createOrderRoutes(db));
 app.use("/api", createSubscriberRoutes(db));
+
+// Chat Routes
+app.post("/api/chat", chatController.handleChat);
 
 // Root route for health check
 app.get("/health", (req, res) => {
