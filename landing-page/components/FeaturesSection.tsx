@@ -5,7 +5,7 @@ import { Reveal, LazyVideo } from "./ScrollReveal";
 
 export default function FeaturesSection() {
   return (
-    <section className="w-full bg-[#f7f7f7] text-black font-sans">
+    <section id="features" className="w-full bg-[#f7f7f7] text-black font-sans">
       {/* Section 1: Samsung Health Ecosystem (h-screen on desktop, auto on mobile) */}
       <div className="w-full h-auto md:h-screen flex flex-col justify-start md:justify-between overflow-hidden pt-16 md:pt-24 pb-0 relative">
         {/* Top Content Row */}
