@@ -29,7 +29,7 @@ export default function HeroSection() {
         </div>
 
         {/* Main Title with SVG Icon inline */}
-        <h1 className="opacity-0 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-4 md:mb-6 animate-fade-in-up animation-delay-200">
+        <h1 className="opacity-0 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-4 md:mb-6 leading-tight md:leading-[1.15] animate-fade-in-up animation-delay-200">
           <span>Galaxy AI</span>
           <span className="inline-flex items-center align-middle justify-center h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 relative">
             <Image

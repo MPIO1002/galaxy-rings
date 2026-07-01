@@ -11,7 +11,7 @@ export default function FeaturesSection() {
         {/* Top Content Row */}
         <Reveal className="w-full max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 items-center md:items-start text-center md:text-left z-10">
           {/* Top Left Title */}
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-black text-balance">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-black text-balance leading-tight md:leading-[1.2]">
             Tiết kiệm hơn với đội hình theo dõi sức khỏe tối thượng
           </h2>
           {/* Top Right Description */}
@@ -40,7 +40,7 @@ export default function FeaturesSection() {
         <div className="w-full h-auto md:h-full grid grid-cols-1 md:grid-cols-2 items-center max-w-6xl mx-auto">
           {/* Left Column Content (centered on mobile, left-aligned and close to image on desktop) */}
           <Reveal className="flex flex-col justify-center items-center md:items-start text-center md:text-left max-w-md mx-auto px-6 py-12 md:py-0">
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-black mb-6 text-balance">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-black mb-6 text-balance leading-tight md:leading-[1.2]">
               Bắt đầu với tài khoản Samsung của bạn
             </h2>
             <p className="text-black/80 text-sm md:text-base leading-relaxed text-balance">
@@ -68,7 +68,7 @@ export default function FeaturesSection() {
       <div className="w-full min-h-screen flex flex-col justify-start items-center py-16 md:py-24">
         {/* Top Text Block */}
         <Reveal className="max-w-3xl text-center mb-6 md:mb-14 px-6">
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-black mb-4 md:mb-6 text-balance">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-black mb-4 md:mb-6 text-balance leading-tight md:leading-[1.2]">
             Thấu hiểu thể trạng. Làm chủ ngày dài.
           </h2>
           <p className="text-black/80 text-sm md:text-base leading-relaxed text-balance">

@@ -106,7 +106,7 @@ export default function BuySection() {
             <span className="text-zinc-500 text-xs md:text-sm font-bold tracking-widest uppercase mb-1">
               Đặt hàng ngay
             </span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black mb-3">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-black mb-3 leading-tight md:leading-[1.2]">
               Galaxy Ring
             </h2>
             <div className="flex items-baseline gap-3 mb-6">

@@ -2,6 +2,7 @@
 import HeroSection from "@/components/HeroSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import BuySection from "@/components/BuySection";
+import SubscribeSection from "@/components/SubscribeSection";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <HeroSection />
       <FeaturesSection />
       <BuySection />
+      <SubscribeSection />
     </main>
   );
 }
