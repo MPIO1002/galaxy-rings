@@ -25,6 +25,27 @@ export class OrderController {
         size: Number(size)
       });
 
+      // --- Discord Webhook logic ---
+      const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+      if (webhookUrl) {
+        const vnTime = new Date().toLocaleString("vi-VN", {
+          timeZone: "Asia/Ho_Chi_Minh",
+          dateStyle: "full",
+          timeStyle: "medium",
+        });
+
+        const discordMessage = {
+          content: `🛒 **CÓ ĐƠN ĐẶT HÀNG MỚI!**\n\n> 👤 **Khách hàng:** \`${fullName}\`\n> 📧 **Email:** \`${email}\`\n> 📞 **SĐT:** \`${phone}\`\n> 📍 **Địa chỉ:** \`${address}\`\n> 💍 **Sản phẩm:** \`ID: ${productId} | Màu: ${colorId} | Size: ${size}\`\n> 🕒 **Thời gian:** *${vnTime}*\n\n🔥 *Vui lòng liên hệ khách hàng để xác nhận đơn!*`
+        };
+
+        fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(discordMessage),
+        }).catch((err) => console.error("Lỗi kết nối tới Discord:", err));
+      }
+      // -----------------------------
+
       res.status(201).json({
         success: true,
         message: "Đặt hàng thành công!",

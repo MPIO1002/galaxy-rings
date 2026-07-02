@@ -21,6 +21,27 @@ export class SubscriberController {
         phone
       });
 
+      // --- Discord Webhook logic ---
+      const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+      if (webhookUrl) {
+        const vnTime = new Date().toLocaleString("vi-VN", {
+          timeZone: "Asia/Ho_Chi_Minh",
+          dateStyle: "full",
+          timeStyle: "medium",
+        });
+
+        const discordMessage = {
+          content: `🎉 **CÓ LƯỢT ĐĂNG KÝ NHẬN TIN MỚI!**\n\n> 👤 **Họ và tên:** \`${fullName}\`\n> 📧 **Email:** \`${email}\`\n> 📞 **SĐT:** \`${phone}\`\n> 🕒 **Thời gian:** *${vnTime}*\n\n🔥 *Hệ thống thông báo tự động từ Galaxy Ring Landing Page.*`
+        };
+
+        fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(discordMessage),
+        }).catch((err) => console.error("Lỗi kết nối tới Discord:", err));
+      }
+      // -----------------------------
+
       res.status(201).json({
         success: true,
         message: "Đăng ký nhận tin thành công!",

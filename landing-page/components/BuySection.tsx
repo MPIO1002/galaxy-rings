@@ -9,6 +9,7 @@ import { ToastContainer } from "@/components/Toast";
 import { CAROUSEL_IMAGES, COLORS, SIZES, PRODUCTS } from "@/constants/buyData";
 import CarouselSkeleton from "@/components/skeletons/CarouselSkeleton";
 import BuyConfigSkeleton from "@/components/skeletons/BuyConfigSkeleton";
+import { track } from "@vercel/analytics";
 
 export default function BuySection() {
   const [isLoading, setIsLoading] = useState(true);
@@ -81,6 +82,7 @@ export default function BuySection() {
   const product = PRODUCTS[0];
 
   const onSubmitOrder = () => {
+    track("click_buy_section_confirm_order");
     if (!selectedColor) {
       showToast("Vui lòng chọn màu sắc trước khi đặt hàng.", "warning");
       return;
@@ -93,6 +95,7 @@ export default function BuySection() {
   };
 
   const handleBuyClick = () => {
+    track("click_buy_section_buy_now_intent");
     if (!selectedColor) {
       showToast("Vui lòng chọn màu sắc trước khi đặt hàng.", "warning");
       return;

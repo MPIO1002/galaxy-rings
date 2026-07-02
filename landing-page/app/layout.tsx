@@ -3,6 +3,7 @@ import { Montserrat, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Chatbot from "@/components/Chatbot";
+import { Analytics } from "@vercel/analytics/next"
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -69,6 +70,7 @@ export default function RootLayout({
       <body className="font-sans min-h-full flex flex-col">
         {children}
         <Chatbot />
+        <Analytics />
       </body>
     </html>
   );

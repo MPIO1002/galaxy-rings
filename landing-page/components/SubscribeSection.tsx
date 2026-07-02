@@ -5,6 +5,7 @@ import { Reveal } from "./ScrollReveal";
 import { useSubscribe } from "../hooks/useSubscribe";
 import { useToast } from "../hooks/useToast";
 import { ToastContainer } from "./Toast";
+import { track } from "@vercel/analytics";
 
 export default function SubscribeSection() {
   const { showToast, dismissToast, toasts } = useToast();
@@ -163,6 +164,7 @@ export default function SubscribeSection() {
                 {/* Submit Button */}
                 <button
                   type="submit"
+                  onClick={() => track("click_subscribe_submit")}
                   disabled={isSubmitting}
                   className={`w-full py-4 rounded-xl text-black font-bold text-sm tracking-wider uppercase transition-all duration-300 select-none shadow-lg cursor-pointer flex items-center justify-center gap-2 ${
                     isSubmitting

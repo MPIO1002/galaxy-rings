@@ -2,6 +2,7 @@
 
 import { useNavbar } from "@/hooks/useNavbar";
 import { NAV_LINKS } from "@/constants/navigationData";
+import { track } from "@vercel/analytics";
 
 export default function Navbar() {
   const { isOpen, setIsOpen, isScrolled, handleScrollToSection } = useNavbar();
@@ -43,7 +44,10 @@ export default function Navbar() {
         <div className="hidden md:block">
           <a
             href="#buy"
-            onClick={(e) => handleScrollToSection(e, "#buy")}
+            onClick={(e) => {
+              track("click_navbar_desktop_buy_now");
+              handleScrollToSection(e, "#buy");
+            }}
             className="px-5 py-2.5 rounded-full bg-white text-black hover:bg-zinc-200 transition-all duration-300 font-bold text-xs tracking-wider uppercase shadow-md active:scale-95"
           >
             Mua ngay
@@ -90,6 +94,7 @@ export default function Navbar() {
           <a
             href="#buy"
             onClick={(e) => {
+              track("click_navbar_mobile_buy_now");
               setIsOpen(false);
               handleScrollToSection(e, "#buy");
             }}

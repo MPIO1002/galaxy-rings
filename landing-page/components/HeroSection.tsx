@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { track } from "@vercel/analytics";
 
 export default function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -53,12 +54,14 @@ export default function HeroSection() {
         <div className="opacity-0 flex flex-row items-center justify-center gap-3 mb-6 md:mb-8 w-full max-w-xs sm:max-w-none sm:w-auto animate-fade-in-up animation-delay-600">
           <a
             href="#buy"
+            onClick={() => track("click_hero_buy_now")}
             className="flex-1 sm:flex-none text-center px-5 py-2.5 sm:px-8 sm:py-3.5 rounded-full bg-white text-black font-semibold text-xs sm:text-sm transition-all duration-300 hover:bg-zinc-100 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
           >
             Mua ngay
           </a>
           <a
-            href="#learn"
+            href="#features"
+            onClick={() => track("click_hero_learn_more")}
             className="flex-1 sm:flex-none text-center px-5 py-2.5 sm:px-8 sm:py-3.5 rounded-full border border-zinc-700 hover:border-white text-white font-semibold text-xs sm:text-sm transition-all duration-300 hover:bg-white/5 hover:scale-105 active:scale-95"
           >
             Tìm hiểu thêm
