@@ -3,7 +3,7 @@
 > *E-Commerce Landing Page and Product Showcase for Samsung Galaxy Ring.*
 
 <!-- INSERT BANNER OR FULL PAGE SCREENSHOT HERE -->
-![Project Banner](YOUR_BANNER_IMAGE_URL_HERE)
+![Project Banner](https://github.com/user-attachments/assets/dde0be6e-758c-44cc-81e4-a3d67caf43a1)
 
 This project is a comprehensive solution that includes a **Frontend** (A smooth, interactive product landing page and an admin dashboard) and a **Backend** (API for order processing, lead tracking, and AI integration). The project focuses on delivering a modern User Experience (UX) and optimal business data tracking.
 
@@ -30,16 +30,16 @@ This project is a comprehensive solution that includes a **Frontend** (A smooth,
 <!-- YOU CAN INSERT SCREENSHOTS HERE FOR BETTER VISUALIZATION -->
 
 ### 1. Landing Page Interface
-![Landing Page Screenshot](YOUR_LANDING_PAGE_IMAGE_URL_HERE)
+![Landing Page Screenshot](https://github.com/user-attachments/assets/20d26c35-0614-4ffe-94c1-468c1c5e5fe7)
 
 ### 2. Order & Configuration Section
-![Buy Section Screenshot](YOUR_BUY_SECTION_IMAGE_URL_HERE)
+![Buy Section Screenshot](https://github.com/user-attachments/assets/876e190e-dc0c-4a09-b309-afc1c2f2fe51)
 
 ### 3. Admin Dashboard
-![Admin Dashboard Screenshot](YOUR_ADMIN_DASHBOARD_IMAGE_URL_HERE)
+![Admin Dashboard Screenshot](https://github.com/user-attachments/assets/debd0d09-fca9-4903-9b38-163fae199013)
 
 ### 4. Discord Webhook Notifications
-![Discord Webhook Screenshot](YOUR_DISCORD_WEBHOOK_IMAGE_URL_HERE)
+![Discord Webhook Screenshot](https://github.com/user-attachments/assets/61d7947a-9e48-4717-8482-7d90eb68f142)
 
 ---
 
