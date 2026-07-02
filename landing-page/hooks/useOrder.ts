@@ -1,112 +1,113 @@
 "use client";
 
-import { useState } from "react";
+import { useForm, UseFormRegister, FieldErrors } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import {
   orderSchema,
   OrderFormData,
-  OrderFormErrors,
 } from "../schemas/orderSchema";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+export interface UseOrderReturn {
+  register: UseFormRegister<OrderFormData>;
+  errors: FieldErrors<OrderFormData>;
+  isSubmitting: boolean;
+  isSuccess: boolean;
+  handleSubmit: (productId: number, colorId: number, size: number) => void;
+  reset: () => void;
+}
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface UseOrderOptions {
   onSuccess?: () => void;
   onError?: (message: string) => void;
 }
 
-interface UseOrderReturn {
-  formData: OrderFormData;
-  errors: OrderFormErrors;
-  isSubmitting: boolean;
-  isSuccess: boolean;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  handleSubmit: (productId: number, colorId: number, size: number) => Promise<void>;
-  reset: () => void;
+/**
+ * Payload gửi lên API = form data (fullName, email, phone, address)
+ * + 3 tham số cấu hình sản phẩm được truyền vào lúc submit.
+ */
+interface OrderPayload extends OrderFormData {
+  productId: number;
+  colorId: number;
+  size: number;
 }
 
-const initialFormData: OrderFormData = {
-  fullName: "",
-  email: "",
-  phone: "",
-  address: "",
-};
+/**
+ * Gửi đơn hàng lên API.
+ * Tách thành hàm độc lập để dễ test và tái sử dụng.
+ */
+async function postOrder(payload: OrderPayload): Promise<void> {
+  const response = await fetch(`${API_URL}/api/orders`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const json = await response.json();
+
+  if (!response.ok) {
+    throw new Error(json.message ?? "Đặt hàng thất bại. Vui lòng thử lại.");
+  }
+}
 
 /**
- * Hook managing the order form state, Zod validation, and API call.
- * Accepts optional onSuccess / onError callbacks for side-effects like toasts.
+ * Hook quản lý form đặt hàng với React Hook Form + Zod và TanStack Query useMutation.
+ *
+ * Điểm khác biệt so với useSubscribe:
+ * - handleSubmit nhận thêm (productId, colorId, size) — các giá trị này
+ *   không phải field nhập tay mà đến từ bộ chọn màu/size trong BuySection,
+ *   nên được merge vào payload ngay trong lúc mutate().
  */
 export function useOrder(options: UseOrderOptions = {}): UseOrderReturn {
   const { onSuccess, onError } = options;
 
-  const [formData, setFormData] = useState<OrderFormData>(initialFormData);
-  const [errors, setErrors] = useState<OrderFormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  // ─── React Hook Form ──────────────────────────────────────────────────────
+  const form = useForm<OrderFormData>({
+    resolver: zodResolver(orderSchema),
+    defaultValues: { fullName: "", email: "", phone: "", address: "" },
+    mode: "onTouched",
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear the field error as the user types
-    if (errors[name as keyof OrderFormData]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
-  };
-
-  const handleSubmit = async (productId: number, colorId: number, size: number) => {
-    // Zod client-side validation
-    const result = orderSchema.safeParse(formData);
-    if (!result.success) {
-      const fieldErrors: OrderFormErrors = {};
-      for (const issue of result.error.issues) {
-        const field = issue.path[0] as keyof OrderFormData;
-        if (!fieldErrors[field]) {
-          fieldErrors[field] = issue.message;
-        }
-      }
-      setErrors(fieldErrors);
-      return;
-    }
-
-    setIsSubmitting(true);
-    setErrors({});
-
-    try {
-      const response = await fetch(`${API_URL}/api/orders`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...result.data,
-          productId,
-          colorId,
-          size,
-        }),
-      });
-
-      const json = await response.json();
-
-      if (!response.ok) {
-        throw new Error(json.message ?? "Đặt hàng thất bại. Vui lòng thử lại.");
-      }
-
-      setIsSuccess(true);
-      setFormData(initialFormData);
+  // ─── TanStack Query Mutation ──────────────────────────────────────────────
+  const mutation = useMutation({
+    mutationFn: postOrder,
+    onSuccess: () => {
       onSuccess?.();
-    } catch (err: unknown) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "Không thể kết nối đến máy chủ. Vui lòng thử lại sau.";
-      onError?.(message);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    },
+    onError: (err: Error) => {
+      onError?.(
+        err.message ?? "Không thể kết nối đến máy chủ. Vui lòng thử lại sau."
+      );
+    },
+  });
 
+  // ─── Submit handler ───────────────────────────────────────────────────────
+  // Nhận thêm 3 tham số từ bộ chọn sản phẩm bên ngoài form.
+  // RHF chỉ gọi callback này sau khi tất cả validation Zod đã pass.
+  const handleSubmit = (productId: number, colorId: number, size: number) =>
+    form.handleSubmit((data) => {
+      mutation.mutate({ ...data, productId, colorId, size });
+    })();
+
+  // ─── Reset ────────────────────────────────────────────────────────────────
   const reset = () => {
-    setIsSuccess(false);
-    setFormData(initialFormData);
-    setErrors({});
+    form.reset();
+    mutation.reset();
   };
 
-  return { formData, errors, isSubmitting, isSuccess, handleChange, handleSubmit, reset };
+  return {
+    // RHF helpers
+    register: form.register,
+    errors: form.formState.errors,
+
+    // Mutation state
+    isSubmitting: mutation.isPending,
+    isSuccess: mutation.isSuccess,
+
+    // Handlers
+    handleSubmit,
+    reset,
+  };
 }

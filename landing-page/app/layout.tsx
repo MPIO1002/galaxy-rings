@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Chatbot from "@/components/Chatbot";
 import { Analytics } from "@vercel/analytics/next"
+import Providers from "./providers";
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -68,9 +69,11 @@ export default function RootLayout({
       className={cn(montserrat.variable, "font-sans", geist.variable)}
     >
       <body className="font-sans min-h-full flex flex-col">
-        {children}
-        <Chatbot />
-        <Analytics />
+        <Providers>
+          {children}
+          <Chatbot />
+          <Analytics />
+        </Providers>
       </body>
     </html>
   );

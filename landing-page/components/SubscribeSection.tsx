@@ -10,7 +10,7 @@ import { track } from "@vercel/analytics";
 export default function SubscribeSection() {
   const { showToast, dismissToast, toasts } = useToast();
 
-  const { formData, errors, isSubmitting, isSuccess, handleChange, handleSubmit, reset } =
+  const { register, errors, isSubmitting, isSuccess, handleSubmit, reset } =
     useSubscribe({
       onSuccess: () =>
         showToast("Đăng ký thành công! Chúng tôi sẽ liên hệ sớm nhất.", "success"),
@@ -88,9 +88,6 @@ export default function SubscribeSection() {
                   <input
                     type="text"
                     id="fullName"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
                     placeholder="Nguyễn Văn A"
                     disabled={isSubmitting}
                     className={`w-full px-4 py-3.5 rounded-xl bg-zinc-950/60 border text-sm text-white placeholder-zinc-600 focus:outline-none focus:ring-2 transition-all duration-300 ${
@@ -98,11 +95,12 @@ export default function SubscribeSection() {
                         ? "border-red-500 focus:ring-red-500/20"
                         : "border-zinc-800 focus:border-zinc-600 focus:ring-zinc-600/20"
                     }`}
+                    {...register("fullName")}
                   />
                   {errors.fullName && (
                     <p className="text-red-500 text-xs mt-1.5 font-medium flex items-center gap-1.5">
                       <span className="w-1 h-1 rounded-full bg-red-500 inline-block" />
-                      {errors.fullName}
+                      {errors.fullName.message}
                     </p>
                   )}
                 </div>
@@ -115,9 +113,6 @@ export default function SubscribeSection() {
                   <input
                     type="email"
                     id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
                     placeholder="name@company.com"
                     disabled={isSubmitting}
                     className={`w-full px-4 py-3.5 rounded-xl bg-zinc-950/60 border text-sm text-white placeholder-zinc-600 focus:outline-none focus:ring-2 transition-all duration-300 ${
@@ -125,11 +120,12 @@ export default function SubscribeSection() {
                         ? "border-red-500 focus:ring-red-500/20"
                         : "border-zinc-800 focus:border-zinc-600 focus:ring-zinc-600/20"
                     }`}
+                    {...register("email")}
                   />
                   {errors.email && (
                     <p className="text-red-500 text-xs mt-1.5 font-medium flex items-center gap-1.5">
                       <span className="w-1 h-1 rounded-full bg-red-500 inline-block" />
-                      {errors.email}
+                      {errors.email.message}
                     </p>
                   )}
                 </div>
@@ -142,9 +138,6 @@ export default function SubscribeSection() {
                   <input
                     type="tel"
                     id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
                     placeholder="0912345678"
                     disabled={isSubmitting}
                     className={`w-full px-4 py-3.5 rounded-xl bg-zinc-950/60 border text-sm text-white placeholder-zinc-600 focus:outline-none focus:ring-2 transition-all duration-300 ${
@@ -152,11 +145,12 @@ export default function SubscribeSection() {
                         ? "border-red-500 focus:ring-red-500/20"
                         : "border-zinc-800 focus:border-zinc-600 focus:ring-zinc-600/20"
                     }`}
+                    {...register("phone")}
                   />
                   {errors.phone && (
                     <p className="text-red-500 text-xs mt-1.5 font-medium flex items-center gap-1.5">
                       <span className="w-1 h-1 rounded-full bg-red-500 inline-block" />
-                      {errors.phone}
+                      {errors.phone.message}
                     </p>
                   )}
                 </div>
