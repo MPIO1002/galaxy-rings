@@ -16,6 +16,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://galaxy-rings.vercel.app"),
   title: "Galaxy Ring Thế Hệ Mới - Trợ Lý Sức Khỏe AI Toàn Diện | Samsung 2026",
   description: "Khám phá Galaxy Ring - chiếc nhẫn thông minh đột phá với cảm biến sinh học tân tiến và trợ lý AI. Theo dõi giấc ngủ, nhịp tim và chỉ số năng lượng Energy Score chuẩn xác suốt 24/7.",
   keywords: ["Galaxy Ring", "nhẫn thông minh", "Samsung Galaxy Ring 2026", "thiết bị theo dõi sức khỏe", "smart ring", "Energy Score AI"],
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Galaxy Ring - Trợ Lý Sức Khỏe AI Toàn Diện",
     description: "Theo dõi giấc ngủ, nhịp tim và năng lượng cơ thể 24/7 với Galaxy Ring thế hệ mới.",
-    images: ["/og-image.webp"],
+    images: ["/all-rings.webp"],
   },
 
   robots: {

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { saveToken, removeToken, getToken } from "@/lib/auth";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface UseAuthReturn {
   isLoading: boolean;

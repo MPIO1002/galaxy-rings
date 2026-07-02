@@ -8,7 +8,7 @@ import {
   SubscribeFormData,
 } from "../schemas/subscribeSchema";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface UseSubscribeOptions {
   onSuccess?: () => void;
