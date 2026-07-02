@@ -40,5 +40,5 @@ export const orderSchema = z.object({
     .max(500, "Địa chỉ quá dài (tối đa 500 ký tự)"),
 });
 
-export type OrderFormData = z.input<typeof orderSchema>;
+export type OrderFormData = z.infer<typeof orderSchema>;
 export type OrderFormErrors = Partial<Record<keyof OrderFormData, string>>;
