@@ -12,7 +12,10 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import TableSkeleton from "@/components/admin/TableSkeleton";
+import TableError from "@/components/admin/TableError";
+import TableEmpty from "@/components/admin/TableEmpty";
+import { formatDate } from "@/lib/formatDate";
 
 interface Order {
   id: number;
@@ -32,28 +35,7 @@ const COLOR_MAP: Record<number, { name: string; hex: string }> = {
   3: { name: "Bạc Titanium", hex: "#e5e5e7" },
 };
 
-function formatDate(dateStr: string): string {
-  const d = new Date(dateStr);
-  d.setHours(d.getHours() + 7);
-  return d.toLocaleDateString("vi-VN", {
-    timeZone: "Asia/Ho_Chi_Minh",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
 
-function LoadingSkeleton() {
-  return (
-    <div className="space-y-3">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Skeleton key={i} className="h-12 w-full rounded-lg" />
-      ))}
-    </div>
-  );
-}
 
 export default function OrdersTable() {
   const { data, pagination, isLoading, error, fetchPage } =
@@ -64,36 +46,15 @@ export default function OrdersTable() {
   }, [fetchPage]);
 
   if (isLoading && data.length === 0) {
-    return <LoadingSkeleton />;
+    return <TableSkeleton />;
   }
 
   if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <div className="w-12 h-12 rounded-full bg-destructive/10 border border-destructive/20 flex items-center justify-center text-destructive mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-          </svg>
-        </div>
-        <p className="text-sm text-destructive font-medium mb-3">{error}</p>
-        <Button variant="outline" size="sm" onClick={() => fetchPage(1)} className="cursor-pointer">
-          Thử lại
-        </Button>
-      </div>
-    );
+    return <TableError message={error} onRetry={() => fetchPage(1)} />;
   }
 
   if (data.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-          </svg>
-        </div>
-        <p className="text-sm text-muted-foreground">Chưa có đơn hàng nào</p>
-      </div>
-    );
+    return <TableEmpty message="Chưa có đơn hàng nào" />;
   }
 
   return (

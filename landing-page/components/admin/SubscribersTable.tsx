@@ -11,7 +11,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
+import TableSkeleton from "@/components/admin/TableSkeleton";
+import TableError from "@/components/admin/TableError";
+import TableEmpty from "@/components/admin/TableEmpty";
+import { formatDate } from "@/lib/formatDate";
 
 interface Subscriber {
   id: number;
@@ -21,28 +24,7 @@ interface Subscriber {
   createdAt: string;
 }
 
-function formatDate(dateStr: string): string {
-  const d = new Date(dateStr);
-  d.setHours(d.getHours() + 7);
-  return d.toLocaleDateString("vi-VN", {
-    timeZone: "Asia/Ho_Chi_Minh",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
 
-function LoadingSkeleton() {
-  return (
-    <div className="space-y-3">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Skeleton key={i} className="h-12 w-full rounded-lg" />
-      ))}
-    </div>
-  );
-}
 
 export default function SubscribersTable() {
   const { data, pagination, isLoading, error, fetchPage } =
@@ -53,36 +35,15 @@ export default function SubscribersTable() {
   }, [fetchPage]);
 
   if (isLoading && data.length === 0) {
-    return <LoadingSkeleton />;
+    return <TableSkeleton />;
   }
 
   if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <div className="w-12 h-12 rounded-full bg-destructive/10 border border-destructive/20 flex items-center justify-center text-destructive mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-          </svg>
-        </div>
-        <p className="text-sm text-destructive font-medium mb-3">{error}</p>
-        <Button variant="outline" size="sm" onClick={() => fetchPage(1)} className="cursor-pointer">
-          Thử lại
-        </Button>
-      </div>
-    );
+    return <TableError message={error} onRetry={() => fetchPage(1)} />;
   }
 
   if (data.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-muted-foreground mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-          </svg>
-        </div>
-        <p className="text-sm text-muted-foreground">Chưa có đăng ký nào</p>
-      </div>
-    );
+    return <TableEmpty message="Chưa có đăng ký nào" />;
   }
 
   return (
